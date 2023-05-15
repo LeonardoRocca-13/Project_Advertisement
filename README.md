@@ -7,6 +7,5 @@ By utilizing personal, flight, and weather data, we generate a prompt using an O
 We believe that targeted advertising can greatly enhance the effectiveness of promotional campaigns while providing users with ads that are genuinely meaningful and tailored to their interests. Through the combination of advanced technologies and data analysis, our project aims to deliver a new level of personalized advertising.
 
 ## Team
-Leonardo Rocca
-Alessandro Kuz
-Feel free to explore our repository and contribute to this exciting project!
+- Leonardo Rocca
+- Alessandro Kuz
