@@ -20,7 +20,7 @@ mypy-extensions==1.0.0
 numexpr==2.8.4
 numpy==1.24.3
 openapi-schema-pydantic==1.2.4
-opencv-python==4.7.0.72
+opencv-contrib-python==4.7.0.72
 packaging==23.1
 pydantic==1.10.7
 PyYAML==6.0
