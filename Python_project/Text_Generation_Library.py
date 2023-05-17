@@ -44,5 +44,5 @@ def setup_weather(Country: str, City: str):
 
     return weather_data
 
-
-print(setup_weather("Italy", "Rome"))
+if __name__ == "__main__":
+    pprint.pprint(setup_weather("Italy", "Rome"))
