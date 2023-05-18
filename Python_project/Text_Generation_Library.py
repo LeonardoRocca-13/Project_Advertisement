@@ -21,28 +21,14 @@ def setup_api_openai(API_key: str):
     return llm
 
 
-"""
-
-esempio del json di risposta
-current_weather": {
-    "time": "2022-07-01T09:00",
-    "temperature": 13.3,
-    "weathercode": 3,
-    "windspeed": 10.3,
-    "winddirection": 262
-}
-    
-"""
-
-
 def setup_weather(Country: str, City: str):
     geolocator = Nominatim(user_agent="my_user_agent")
-    localisation = geolocator.geocode(City + ',' + Country)
+    location = geolocator.geocode(City + ',' + Country)
 
-    url = f"https://api.open-meteo.com/v1/forecast?latitude={localisation.latitude}&longitude={localisation.longitude}&current_weather=true"
+    url = f"https://api.open-meteo.com/v1/forecast?latitude={location.latitude}&longitude={location.longitude}&current_weather=true"
     weather_data = requests.get(url).json()
 
-    return weather_data
+    return weather_data['current_weather']
 
 
 if __name__ == "__main__":

@@ -1,0 +1,15 @@
+
+{
+  "clear_sky": 0,
+  "cloudy": [1, 2, 3],
+  "fog": [45, 48],
+  "drizzle": [51, 53, 55],
+  "freezing_drizzle": [56, 57],
+  "rain": [61, 63, 65],
+  "freezing_rain": [66, 67],
+  "snow": [71, 73, 75],
+  "snow_grains": [77],
+  "rain_showers": [80, 81, 82],
+  "snow_showers": [85, 86],
+  "thunderstorm": [95, 96, 99]
+}
