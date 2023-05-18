@@ -13,8 +13,8 @@ window.geometry("800x600")
 
 # text label
 greeting_label = ttk.Label(window,
-                  text="Hello User!",
-                  font=("Helvetica Bold", 21))
+                           text="Hello User!",
+                           font=("Helvetica Bold", 21))
 greeting_label.pack(pady=10)
 
 # button
