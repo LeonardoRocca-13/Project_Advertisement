@@ -30,6 +30,9 @@ def setup_weather(Country: str, City: str):
 
     return weather_data['current_weather']
 
+def generate_prompt(context: dict, llm):
+    ...
+
 
 if __name__ == "__main__":
     pprint.pprint(setup_weather("Italy", "Rome"))
