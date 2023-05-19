@@ -1,5 +1,4 @@
 import os
-
 import requests
 from geopy.geocoders import Nominatim
 from langchain import LLMChain
@@ -31,7 +30,12 @@ def setup_weather(Country: str, City: str):
 
 
 def generate_prompt(context, llm, infos: tuple):
+
     sex, age, mood, flight_duration, time_before_departure, airline_company, products = infos
+
+    # import the json file
+    with open('weather_index.json', 'r') as json_file:
+        json_context = json_file.read()
 
     # Define the prompt template
     template = """
@@ -42,12 +46,13 @@ def generate_prompt(context, llm, infos: tuple):
     Capture their attention and emphasize how this {products} knowing that the meteo in the city the person is currently in is {context}.
     The output should exclude any personal information about the person and should adress the target personally,
     (speaking to him like a friend), and the him why he should be interested to the ad.
+    Use this json file to decode the context but don't show anything in the ad: {json_context}.
     """
 
     prompt = PromptTemplate(
         template=template,
         input_variables=['sex', 'age', 'mood', 'flight_duration', 'time_before_departure', 'airline_company',
-                         'products', 'context'],
+                         'products', 'context', 'json_context'],
     )
 
     llm_chain = LLMChain(
@@ -64,14 +69,15 @@ def generate_prompt(context, llm, infos: tuple):
         time_before_departure=time_before_departure,
         airline_company=airline_company,
         products=products,
-        context=context
+        context=context,
+        json_context=json_context
     )
 
     return results
 
 
 if __name__ == "__main__":
-    llm = setup_api_openai('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')
+    llm = setup_api_openai('')
     weather_data = setup_weather('Rome', 'Italy')
     ad = generate_prompt(weather_data, llm, ['Male', '30', 'Happy', '2', '2', 'Emirates', 'coffee'])
 
