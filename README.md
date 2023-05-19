@@ -59,4 +59,4 @@ We welcome contributions from anyone interested in improving our project! If you
 
 ## License
 
-This project is released under the MIT License. Please refer to the `LICENSE` file for the full license text.
+This project is released under the MIT License. Please refer to the [`LICENSE`](LICENSE) file for the full license text.
