@@ -6,11 +6,19 @@ from langchain import PromptTemplate
 from langchain.chat_models import ChatOpenAI
 
 
-def setup_api_openai(API_key: str):
+def setup_api_openai():
     # Get the API key of the user
-    os.environ["OPENAI_API_KEY"] = API_key
+    try:
+        with open('openai_api_key.txt', 'r') as key_file:
+            print(key_file)
+            api_key = key_file.readline()
+    except FileNotFoundError:
+        print("Please enter your OpenAI API key in the file 'openai_api_key.txt' in the root folder of the project.")
+        exit(1)
 
-    # Define the language model and the temperature
+    os.environ["OPENAI_API_KEY"] = api_key
+
+    # Define the large language model and the relative temperature
     llm = ChatOpenAI(
         model_name="gpt-3.5-turbo",
         temperature=1
@@ -20,24 +28,27 @@ def setup_api_openai(API_key: str):
 
 
 def setup_weather(Country: str, City: str):
+    # Use of Geopy library to retrieve the latitude and longitude form the name of a city and a country
     geolocator = Nominatim(user_agent="my_user_agent")
     location = geolocator.geocode(City + ',' + Country)
 
+    # Utilization of the Open-Meteo API to retrieve the weather data of the city
     url = f"https://api.open-meteo.com/v1/forecast?latitude={location.latitude}&longitude={location.longitude}&current_weather=true"
+
+    # Send a GET request to the weather API and retrieve the JSON response
     weather_data = requests.get(url).json()
 
     return weather_data['current_weather']
 
 
 def generate_prompt(context, llm, infos: tuple):
-
     sex, age, mood, flight_duration, time_before_departure, airline_company, products = infos
 
-    # import the json file
+    # Import the json file containing the weather index
     with open('weather_index.json', 'r') as json_file:
         json_context = json_file.read()
 
-    # Define the prompt template
+    # Define the prompt template with placeholders for variables
     template = """
     Write a targeted 1 short sentence long advertisement knowing the following information about the person:
     {sex}, {age} years old, who is currently feeling {mood}.
@@ -49,18 +60,21 @@ def generate_prompt(context, llm, infos: tuple):
     Use this json file to decode the context but don't show anything in the ad: {json_context}.
     """
 
+    # Create a prompt template with defined variables
     prompt = PromptTemplate(
         template=template,
         input_variables=['sex', 'age', 'mood', 'flight_duration', 'time_before_departure', 'airline_company',
                          'products', 'context', 'json_context'],
     )
 
+    # Create an LLMChain instance with the prompt and language model
     llm_chain = LLMChain(
         prompt=prompt,
         llm=llm,
         verbose=True
     )
 
+    # Run the language model chain with the provided variables and return the results
     results = llm_chain.run(
         sex=sex,
         age=age,
@@ -77,7 +91,7 @@ def generate_prompt(context, llm, infos: tuple):
 
 
 if __name__ == "__main__":
-    llm = setup_api_openai('')
+    llm = setup_api_openai()
     weather_data = setup_weather('Rome', 'Italy')
     ad = generate_prompt(weather_data, llm, ['Male', '30', 'Happy', '2', '2', 'Emirates', 'coffee'])
 
