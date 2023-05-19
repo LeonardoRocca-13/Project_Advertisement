@@ -8,10 +8,9 @@ from langchain.chat_models import ChatOpenAI
 
 
 def setup_api_openai():
-    # Get the API key of the user
+    # Get the API key for OpenAI from the file 'openai_api_key.txt' in the resources folder
     try:
         with open('Risorse/openai_api_key.txt', 'r') as key_file:
-            print(key_file)
             api_key = key_file.readline()
     except FileNotFoundError:
         print("Please enter your OpenAI API key in the file 'openai_api_key.txt' in the root folder of the project.")
@@ -43,9 +42,11 @@ def setup_weather(Country: str, City: str):
 
 
 def generate_prompt(context, llm, infos: tuple):
+
+    # Unpack the tuple containing the information about the person
     sex, age, mood, flight_duration, time_before_departure, airline_company, products = infos
 
-    # Import the json file containing the weather index
+    # Get the json file containing the weather index from the resources folder
     with open('Risorse/weather_index.json', 'r') as json_file:
         json_context = json_file.read()
 
@@ -89,11 +90,3 @@ def generate_prompt(context, llm, infos: tuple):
     )
 
     return results
-
-
-if __name__ == "__main__":
-    llm = setup_api_openai()
-    weather_data = setup_weather('Rome', 'Italy')
-    ad = generate_prompt(weather_data, llm, ['Male', '30', 'Happy', '2', '2', 'Emirates', 'coffee'])
-
-    print(ad)
