@@ -1,4 +1,5 @@
 import os
+
 import requests
 from geopy.geocoders import Nominatim
 from langchain import LLMChain
@@ -9,7 +10,7 @@ from langchain.chat_models import ChatOpenAI
 def setup_api_openai():
     # Get the API key of the user
     try:
-        with open('openai_api_key.txt', 'r') as key_file:
+        with open('Risorse/openai_api_key.txt', 'r') as key_file:
             print(key_file)
             api_key = key_file.readline()
     except FileNotFoundError:
@@ -45,7 +46,7 @@ def generate_prompt(context, llm, infos: tuple):
     sex, age, mood, flight_duration, time_before_departure, airline_company, products = infos
 
     # Import the json file containing the weather index
-    with open('weather_index.json', 'r') as json_file:
+    with open('Risorse/weather_index.json', 'r') as json_file:
         json_context = json_file.read()
 
     # Define the prompt template with placeholders for variables

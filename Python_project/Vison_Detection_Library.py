@@ -1,5 +1,6 @@
-import cv2
 import os
+
+import cv2
 
 
 # getting the path of the current file
@@ -7,8 +8,9 @@ def get_path():
     path = os.path.dirname(os.path.abspath(__file__))
     return path
 
+
 def detect_face():
-    model_path = os.path.join(get_path(), "haarcascade_frontalface_default.xml")
+    model_path = os.path.join(get_path(), "Risorse/haarcascade_frontalface_default.xml")
     faceCascade = cv2.CascadeClassifier(model_path)
 
     cap = cv2.VideoCapture(0)
