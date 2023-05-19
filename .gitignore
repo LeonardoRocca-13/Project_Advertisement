@@ -160,4 +160,4 @@ cython_debug/
 #.idea/
 
 # Open AI api key
-Python_project/Risorse/openai_api_key.txt
+Python_project/Resources/openai_api_key.txt
