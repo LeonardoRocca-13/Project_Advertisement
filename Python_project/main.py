@@ -1,9 +1,14 @@
 import customtkinter as ctk
+import cv2
+import tkinter as tk
+from PIL import Image, ImageTk
 
+
+# TODO: Implement a window class & create soup object that gets a flight ticket
 def greeting_window():
     welcome_window = ctk.CTk()
     welcome_window.title("TAP")
-    welcome_window.geometry("800x500")
+    welcome_window.geometry("800x600")
 
 
     greeting_label = ctk.CTkLabel(master=welcome_window,
@@ -69,5 +74,70 @@ us at contact@samplecompany.com."""
 
     welcome_window.mainloop()
 
+
+# Creating a rough draft of the window that will be used to scan the users face
+def webcam_window():
+    webcam_window = ctk.CTk()
+    webcam_window.title("TAP")
+    webcam_window.geometry("800x600")
+
+    webcam_label = ctk.CTkLabel(master=webcam_window,
+                                text="Webcam",
+                                font=ctk.CTkFont(family="Helvetica",
+                                                 size=30, weight="bold"))
+    webcam_label.pack(padx=10, pady=(40, 20))
+
+    
+    # Create a canvas to display the video feed
+    canvas = tk.Canvas(webcam_window, width=800, height=600)
+    canvas.pack()
+
+    # Start capturing and displaying the video frames
+    
+    # Use OpenCV to capture video from the webcam
+    video_capture = cv2.VideoCapture(0)
+
+    # Continuously capture frames from the video feed
+    # while True:
+    i = 0
+    while video_capture.isOpened():
+        # Read a frame from the video capture
+        for i in range(100):
+            ret, frame = video_capture.read()
+
+            # Flip the frame horizontally
+            frame_flipped = cv2.flip(frame, 1)
+
+            # Convert the frame to RGB format
+            frame_rgb = cv2.cvtColor(frame_flipped, cv2.COLOR_BGR2RGB)
+
+            # Resize the frame to fit the Tkinter window
+            frame_resized = cv2.resize(frame_rgb, (800, 600))
+
+            # Convert the frame to an ImageTk format
+            image = Image.fromarray(frame_resized)
+            image_tk = ImageTk.PhotoImage(image)
+
+            # Update the canvas with the new frame
+            canvas.create_image(0, 0, anchor=tk.NW, image=image_tk)
+            canvas.image = image_tk
+
+            # Update the Tkinter GUI
+            webcam_window.update()
+
+            # Break the loop if the user presses the 'q' key
+            # k = cv2.waitKey(30) & 0xff
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+            # if k == 27:  # press 'ESC' to quit
+                break
+
+    # Release the video capture and destroy the OpenCV windows
+    video_capture.release()
+    cv2.destroyAllWindows()
+
+    webcam_window.mainloop()
+
+
 if __name__ == "__main__":
     greeting_window()
+    webcam_window()
