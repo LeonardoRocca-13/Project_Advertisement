@@ -1,5 +1,4 @@
 import os
-
 import requests
 from geopy.geocoders import Nominatim
 from langchain import LLMChain

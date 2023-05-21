@@ -1,5 +1,8 @@
 import os
 import cv2
+import time
+import numpy as np
+from deepface import DeepFace
 
 
 # getting the path of the current file
@@ -8,48 +11,76 @@ def get_path():
     return path
 
 
+def extract_info(frame: cv2, infos: dict):
+    result = DeepFace.analyze(frame, actions=['gender', 'age', 'emotion'], enforce_detection=False, silent=True)
+
+    infos['age'].append(int(result[0]['age']))
+    infos['gender'].append(result[0]['dominant_gender'])
+    infos['emotion'].append(result[0]['dominant_emotion'])
+
+
 def detect_face():
-    # constructing the path to the Haar cascade model for face detection
+    # Get the Haar cascade model for face detection
     model_path = os.path.join(get_path(), "../Resources/haarcascade_frontalface_default.xml")
     faceCascade = cv2.CascadeClassifier(model_path)
 
-    # accessing the default camera
-    cap = cv2.VideoCapture(0)
-    cap.set(3, 640)  # set Width
-    cap.set(4, 480)  # set Height
+    # Accessing the default camera
+    capture = cv2.VideoCapture(0)  # 0 = default camera
+    capture.set(3, 640)  # set Width
+    capture.set(4, 480)  # set Height
 
-    while True:
-        # reading a frame from the camera
-        ret, img = cap.read()
+    # Define the information to extract from the face
+    infos = {
+        'age': [],
+        'gender': [],
+        'emotion': []
+    }
 
-        img = cv2.flip(img, 1)  # flip video image vertically
+    # Define the maximum number of seconds to detect faces
+    set_max_seconds = 10
+    start = time.time()
 
-        # converting the image to grayscale for face detection
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    # Start the loop only when the camera is opened
+    while capture.isOpened():
+        ret, frame = capture.read()
+        # if the frame is read correctly, ret is True
+        if ret:
 
-        # detecting faces in the grayscale image
-        faces = faceCascade.detectMultiScale(
-            gray,
-            scaleFactor=1.05,
-            minNeighbors=5,
-            minSize=(20, 20)
-        )
+            # Flip the frame vertically
+            frame = cv2.flip(frame, 1)
+            gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-        for (x, y, w, h) in faces:
-            # drawing a rectangle around each detected face
-            cv2.rectangle(img, (x, y), (x + w, y + h), (64, 228, 254), 2)
+            # Detect faces in the image
 
-        # displaying the video stream with the detected faces
-        cv2.imshow('video', img)
+            extract_info(frame, infos)
 
-        # waiting for the 'ESC' key to be pressed to exit the program
-        k = cv2.waitKey(30) & 0xff
-        if k == 27:
+            print(infos)
+
+            faces = faceCascade.detectMultiScale(
+                gray_frame,
+                scaleFactor=1.2,
+                minNeighbors=6,
+                minSize=(30, 30)
+            )
+
+            for (x, y, w, h) in faces:
+                # drawing a rectangle around each detected face
+                cv2.rectangle(frame, (x, y), (x + w, y + h), (64, 228, 254), 2)
+
+            cv2.imshow('frame', frame)
+            if cv2.waitKey(1) & 0xff == 27 or (time.time() - start) > set_max_seconds:
+                break
+        else:
             break
 
-    # releasing the camera and closing all windows
-    cap.release()
+    # When everything done, release the capture
+    capture.release()
     cv2.destroyAllWindows()
+
+    age = int(np.mean(infos['age']))
+    gender = max(set(infos['gender']), key=infos['gender'].count)
+    emotion = max(set(infos['emotion']), key=infos['emotion'].count)
+    print(age, gender, emotion)
 
 
 if __name__ == "__main__":
