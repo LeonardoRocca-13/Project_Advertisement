@@ -8,64 +8,12 @@ import os
 import Vison_Detection_Library as vdl
 from utils import get_path as gp
 
-
-DATA_FILE_PATH = "data"
-USER_AGREEMENT_FILE_NAME = "user_agreement.txt"
+from windows import UserAgreementWindow
 
 
-# TODO: Implement a window class
 def greeting_window():
-    welcome_window = ctk.CTk()
-    welcome_window.title("TAP")
-    welcome_window.geometry("800x600")
-
-
-    greeting_label = ctk.CTkLabel(master=welcome_window,
-                            text="Welcome!",
-                            font=ctk.CTkFont(family="Helvetica",
-                                            size=30, weight="bold"))
-    greeting_label.pack(padx=10, pady=(40, 20))
-
-    scrollable_frame = ctk.CTkScrollableFrame(master=welcome_window,
-                                            width=500, height=300)
-    scrollable_frame.pack()
-
-    title_label = ctk.CTkLabel(master=scrollable_frame,
-                            text="User Agreement",
-                            font=ctk.CTkFont(family="Helvetica",
-                                                size=20, weight="bold"))
-    title_label.pack(fill="x")
-
-    # getting current file path
-    current_path = gp.get_path()
-    current_path = os.path.join(current_path, DATA_FILE_PATH)
-
-    # using the current file path to get the path of the user agreement text
-    user_agreement_path = os.path.join(current_path, USER_AGREEMENT_FILE_NAME)
-
-    # importing a sample user agreement text to be displayed
-    with open(user_agreement_path, "r") as file:
-        user_agreement_text: str = file.read()
-    
-    # make the text fit the width of the frame and justify it
-
-    user_agreement_label = ctk.CTkLabel(master=scrollable_frame,
-                                        text=user_agreement_text,
-                                        font=ctk.CTkFont(family="Helvetica",
-                                                            size=15),
-                                        wraplength=500,
-                                        justify="left")
-
-    user_agreement_label.pack(fill="x", pady=10)
-
-    add_task_button = ctk.CTkButton(master=welcome_window,
-                                    text="I Agree",
-                                    width=520,
-                                    command=welcome_window.destroy)
-    add_task_button.pack(pady=20)
-
-
-    welcome_window.mainloop()
+    greeting_window = UserAgreementWindow()
+    greeting_window.run()
 
 
 # Creating a rough draft of the window that will be used to scan the users face
@@ -95,47 +43,111 @@ def webcam_window():
     # As for now they are 2 separate windows
 
     # Continuously capture frames from the video feed
-    # while True:
-    #     if not video_capture():
-    #         video_capture.release()
-    #         cv2.destroyAllWindows()
-    #         break
-    #     # Read a frame from the video capture
-    #     ret, frame = video_capture.read()
+    while True:
+        if not video_capture():
+            video_capture.release()
+            cv2.destroyAllWindows()
+            break
+        # Read a frame from the video capture
+        ret, frame = video_capture.read()
 
-    #     # Flip the frame horizontally
-    #     frame_flipped = cv2.flip(frame, 1)
+        # Flip the frame horizontally
+        frame_flipped = cv2.flip(frame, 1)
 
-    #     # Convert the frame to RGB format
-    #     frame_rgb = cv2.cvtColor(frame_flipped, cv2.COLOR_BGR2RGB)
+        # Convert the frame to RGB format
+        frame_rgb = cv2.cvtColor(frame_flipped, cv2.COLOR_BGR2RGB)
 
-    #     # Resize the frame to fit the Tkinter window
-    #     frame_resized = cv2.resize(frame_rgb, (800, 600))
+        # Resize the frame to fit the Tkinter window
+        frame_resized = cv2.resize(frame_rgb, (800, 600))
 
-    #     # Convert the frame to an ImageTk format
-    #     image = Image.fromarray(frame_resized)
-    #     image_tk = ImageTk.PhotoImage(image)
+        # Convert the frame to an ImageTk format
+        image = Image.fromarray(frame_resized)
+        image_tk = ImageTk.PhotoImage(image)
 
-    #     # Update the canvas with the new frame
-    #     canvas.create_image(0, 0, anchor=tk.NW, image=image_tk)
-    #     canvas.image = image_tk
+        # Update the canvas with the new frame
+        canvas.create_image(0, 0, anchor=tk.NW, image=image_tk)
+        canvas.image = image_tk
 
-    #     # Update the Tkinter GUI
-    #     webcam_window.update()
+        # Update the Tkinter GUI
+        webcam_window.update()
 
-    #     # Break the loop if the user presses the 'q' key
-    #     # k = cv2.waitKey(30) & 0xff
+        # Break the loop if the user presses the 'q' key
+        # k = cv2.waitKey(30) & 0xff
         
-    #     k = cv2.waitKey(30) & 0xff
-    #     if k == 27:  # press 'ESC' to quit
-    #         # Release the video capture and destroy the OpenCV windows
-    #         video_capture.release()
-    #         cv2.destroyAllWindows()
-    #         break
+        k = cv2.waitKey(30) & 0xff
+        if k == 27:  # press 'ESC' to quit
+            # Release the video capture and destroy the OpenCV windows
+            video_capture.release()
+            cv2.destroyAllWindows()
+            break
 
-    # webcam_window.mainloop()
+    webcam_window.mainloop()
+
+
+def testing_window_facescan():
+    webcam_window = ctk.CTk()
+    webcam_window.title("TAP")
+    webcam_window.geometry("800x600")
+
+    webcam_label = ctk.CTkLabel(master=webcam_window,
+                                text="Webcam",
+                                font=ctk.CTkFont(family="Helvetica",
+                                                 size=30, weight="bold"))
+    webcam_label.pack(padx=10, pady=(40, 20))
+
+    
+    # Create a canvas to display the video feed
+    canvas = tk.Canvas(webcam_window, width=800, height=600)
+    canvas.pack()
+
+    model_path = os.path.join(gp.get_path(), "haarcascade_frontalface_default.xml")
+    faceCascade = cv2.CascadeClassifier(model_path)
+
+    cap = cv2.VideoCapture(0)
+    cap.set(3, 800)  # set Width
+    cap.set(4, 600)  # set Height
+
+    while True:
+        ret, img = cap.read()
+        img = cv2.flip(img, 1)
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        faces = faceCascade.detectMultiScale(
+            gray,
+            scaleFactor=1.2,
+            minNeighbors=5,
+            minSize=(20, 20)
+        )
+
+        for (x, y, w, h) in faces:
+            cv2.rectangle(img, (x, y), (x + w, y + h), (64, 228, 254), 2)
+            roi_gray = gray[y:y + h, x:x + w]
+            roi_color = img[y:y + h, x:x + w]
+
+        cv2.imshow('video', img)
+
+        k = cv2.waitKey(30) & 0xff
+        if k == 27:  # press 'ESC' to quit
+            break
+        #TODO: add possibility to close the window using the cross
+
+    cap.release()
+    cv2.destroyAllWindows()
+    webcam_window.mainloop()
+
+
+def get_ad():
+    ad_window = ctk.CTk()
+    ad_window.title("Advertisement")
+    ad_window.geometry("800x600")
+    ad_window.mainloop()
+
+
+def main():
+    greeting_window()
+    # testing_window_facescan()
+    # webcam_window()
+    # get_ad()
 
 
 if __name__ == "__main__":
-    greeting_window()
-    webcam_window()
+    main()
