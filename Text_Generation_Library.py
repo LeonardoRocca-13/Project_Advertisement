@@ -1,7 +1,9 @@
 from geopy.geocoders import Nominatim
+
 from langchain import PromptTemplate
 from langchain.llms import OpenAI
 from langchain import LLMChain
+
 import random as rd
 import requests
 import pprint

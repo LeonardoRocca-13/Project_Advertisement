@@ -1,14 +1,11 @@
+from utils import get_path as gp
+
 import cv2
 import os
 
 
-# getting the path of the current file
-def get_path():
-    path = os.path.dirname(os.path.abspath(__file__))
-    return path
-
 def detect_face():
-    model_path = os.path.join(get_path(), "haarcascade_frontalface_default.xml")
+    model_path = os.path.join(gp.get_path(), "haarcascade_frontalface_default.xml")
     faceCascade = cv2.CascadeClassifier(model_path)
 
     cap = cv2.VideoCapture(0)
@@ -30,11 +27,13 @@ def detect_face():
             roi_gray = gray[y:y + h, x:x + w]
             roi_color = img[y:y + h, x:x + w]
 
+        img = cv2.flip(img, 1)
         cv2.imshow('video', img)
 
         k = cv2.waitKey(30) & 0xff
         if k == 27:  # press 'ESC' to quit
             break
+        #TODO: add possibility to close the window using the cross
 
     cap.release()
     cv2.destroyAllWindows()
