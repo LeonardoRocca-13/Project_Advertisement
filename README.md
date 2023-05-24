@@ -28,7 +28,7 @@ Our project is developed and maintained by:
 To set up the project and install the required dependencies, please follow these steps:
 
 1. Clone the repository:
-```git clone https://github.com/your-username/your-repo.git```
+```git clone https://github.com/LeonardoRocca-13/Project_Advertisement.git```
 
 2. Navigate to the project directory:
 ```cd YOUR-REPO-PATH```

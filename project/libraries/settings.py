@@ -1,0 +1,5 @@
+USER_AGREEMENT_FILE_NAME = "user_agreement.txt"
+HAARCASCADE_FILE_NAME = "haarcascade_frontalface_default.xml"
+OPENAI_API_KEY_FILE_NAME = "openai_api_key.txt"
+WEATHER_INDEX_FILE_NAME = "weather_index.json"
+RESOURCES_FOLDER_NAME = "resources"

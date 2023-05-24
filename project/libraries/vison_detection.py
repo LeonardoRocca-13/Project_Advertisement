@@ -4,11 +4,8 @@ import time
 import cv2
 import numpy as np
 from deepface import DeepFace
-
-
-def get_path():
-    path = os.path.dirname(os.path.abspath(__file__))
-    return path
+from get_path import get_path
+from settings import HAARCASCADE_FILE_NAME, RESOURCES_FOLDER_NAME
 
 
 def capture_frame():
@@ -55,7 +52,7 @@ def capture_frame():
 
 def detect_face(frame: cv2):
     # Get the path to the model file
-    model_path = os.path.join(get_path(), "../Resources/haarcascade_frontalface_default.xml")
+    model_path = os.path.join(get_path(), RESOURCES_FOLDER_NAME, HAARCASCADE_FILE_NAME)
 
     # Create a CascadeClassifier object for face detection
     faceCascade = cv2.CascadeClassifier(model_path)
@@ -98,7 +95,8 @@ def extract_info(info: list):
     print(result)
 
     # Calculate the mean age, most frequent gender, and most frequent emotion
-    result['age'] = int(np.mean(result['age']))
+    result['age'] = int(np.median(result['age']))
+    ##TODO: Check if can use meadian instead of mean
     result['gender'] = max(set(result['gender']), key=result['gender'].count)
     result['emotion'] = max(set(result['emotion']), key=result['emotion'].count)
 
