@@ -5,6 +5,7 @@ import os
 from libraries.utils.get_path import get_path
 from libraries.utils.settings import RESOURCES_FOLDER_NAME, WEATHER_INDEX_FILE_NAME
 
+
 def generate_prompt(weather: dict, llm, bio_info: tuple, flight_info: tuple, product: str):
     # Unpack the lists containing the information about the person and the flight
     age, gender, emotion = bio_info
