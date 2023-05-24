@@ -1,15 +1,22 @@
-import os
-import requests
 from geopy.geocoders import Nominatim
-from langchain import LLMChain
-from langchain import PromptTemplate
+
 from langchain.chat_models import ChatOpenAI
+from langchain import PromptTemplate
+from langchain import LLMChain
+
+import requests
+import os
+
+from get_path import get_path
+from settings import OPENAI_API_KEY_FILE_NAME, RESOURCES_FOLDER_NAME, WEATHER_INDEX_FILE_NAME
 
 
 def setup_api_openai():
     # Get the API key for OpenAI from the file 'openai_api_key.txt' in the resources folder
+    main_dir_path = get_path()
+    file_path = os.path.join(main_dir_path, RESOURCES_FOLDER_NAME, OPENAI_API_KEY_FILE_NAME)
     try:
-        with open('../Resources/openai_api_key.txt', 'r') as key_file:
+        with open(file_path, 'r') as key_file:
             api_key = key_file.readline()
     except FileNotFoundError:
         print("Please enter your OpenAI API key in the file 'openai_api_key.txt' in the root folder of the project.")
@@ -46,7 +53,9 @@ def generate_prompt(context, llm, infos: tuple):
     sex, age, mood, flight_duration, time_before_departure, airline_company, products = infos
 
     # Get the json file containing the weather index from the resources folder
-    with open('../Resources/weather_index.json', 'r') as json_file:
+    main_dir_path = get_path()
+    file_path = os.path.join(main_dir_path, RESOURCES_FOLDER_NAME, WEATHER_INDEX_FILE_NAME)
+    with open(main_dir_path, 'r') as json_file:
         json_context = json_file.read()
 
     # Define the prompt template with placeholders for variables

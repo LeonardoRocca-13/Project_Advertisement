@@ -1,0 +1,16 @@
+Report of the analysis of the video
+
+Frame analyzed [0]:
+
+gender: {'Woman': 0.3311125794425607, 'Man': 99.66889023780823}
+
+dominant_gender: Man
+
+region: {'x': 303, 'y': 201, 'w': 262, 'h': 262}
+
+age: 28
+
+emotion: {'angry': 4.633872859708838, 'disgust': 3.276927511484902e-05, 'fear': 15.310607273018794, 'happy': 6.5931599791741355, 'sad': 6.418285156386206, 'surprise': 0.0027962087035596902, 'neutral': 67.04124611861981}
+
+dominant_emotion: neutral
+
