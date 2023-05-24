@@ -47,10 +47,10 @@ def setup_weather(Country: str, City: str):
     return weather_data['current_weather']
 
 
-def generate_prompt(context, llm, infos: tuple):
-
-    # Unpack the tuple containing the information about the person
-    sex, age, mood, flight_duration, time_before_departure, airline_company, products = infos
+def generate_prompt(weather: dict, llm, bio_info: tuple, flight_info: tuple, product: str):
+    # Unpack the lists containing the information about the person and the flight
+    age, gender, emotion = bio_info
+    flight_duration, time_before_departure, airline_company = flight_info
 
     # Get the json file containing the weather index from the resources folder
     main_dir_path = get_path()
@@ -61,13 +61,13 @@ def generate_prompt(context, llm, infos: tuple):
     # Define the prompt template with placeholders for variables
     template = """
     Write a targeted 1 short sentence long advertisement knowing the following information about the person:
-    {sex}, {age} years old, who is currently feeling {mood}.
-    You should keep in mind that our target is a person taking a {flight_duration}-hours flight, has {time_before_departure} 
-    hours left before departure, and flies with {airline_company} so keep it in mind to target the pricing accordingly. 
-    Capture their attention and emphasize how this {products} knowing that the meteo in the city the person is currently in is {context}.
+    {gender}, {age} years old, who is currently feeling {emotion}.
+    You should keep in mind that our target is a person taking a {flight_duration} flight, has {time_before_departure}
+    left before departure, and flies with {airline_company} so keep it in mind to target the pricing accordingly.
+    Capture their attention and emphasize how this {product} knowing that the meteo in the city the person is currently in is {weather}.
+    Use this json file to decode the weather context but don't show anything in the ad: {json_context}.
     The output should exclude any personal information about the person and should adress the target personally,
     (speaking to him like a friend), and the him why he should be interested to the ad.
-    Use this json file to decode the context but don't show anything in the ad: {json_context}.
     """
 
     # Create a prompt template with defined variables
