@@ -5,11 +5,10 @@ import os
 from libraries.utils.get_path import get_path
 from libraries.utils.settings import RESOURCES_FOLDER_NAME, WEATHER_INDEX_FILE_NAME
 
-
-def generate_prompt(weather, llm, bio_infos: list, flight_infos: list, product: str):
+def generate_prompt(weather: dict, llm, bio_info: tuple, flight_info: tuple, product: str):
     # Unpack the lists containing the information about the person and the flight
-    age, gender, emotion = bio_infos
-    flight_duration, time_before_departure, airline_company = flight_infos
+    age, gender, emotion = bio_info
+    flight_duration, time_before_departure, airline_company = flight_info
 
     # Get the json file containing the weather index from the resources folder
     main_dir_path = get_path()
@@ -24,9 +23,9 @@ def generate_prompt(weather, llm, bio_infos: list, flight_infos: list, product: 
     You should keep in mind that our target is a person taking a {flight_duration} flight, has {time_before_departure}
     left before departure, and flies with {airline_company} so keep it in mind to target the pricing accordingly.
     Capture their attention and emphasize how this {product} knowing that the meteo in the city the person is currently in is {weather}.
+    Use this json file to decode the weather context but don't show anything in the ad: {json_context}.
     The output should exclude any personal information about the person and should adress the target personally,
     (speaking to him like a friend), and the him why he should be interested to the ad.
-    Use this json file to decode the context but don't show anything in the ad: {json_context}.
     """
 
     # Create a prompt template with defined variables

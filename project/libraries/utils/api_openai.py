@@ -5,7 +5,7 @@ from libraries.utils.settings import OPENAI_API_KEY_FILE_NAME, RESOURCES_FOLDER_
 from libraries.utils.get_path import get_path
 
 
-def setup_api_openai():
+def get_openai_model():
     # Get the API key for OpenAI from the file 'openai_api_key.txt' in the resources folder
     main_dir_path = get_path()
     file_path = os.path.join(main_dir_path, RESOURCES_FOLDER_NAME, OPENAI_API_KEY_FILE_NAME)

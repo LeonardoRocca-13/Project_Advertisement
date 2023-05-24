@@ -95,7 +95,7 @@ def extract_info(info: list):
     bio_info.append(max(set(result['emotion']), key=result['emotion'].count))
 
     # Return the extracted and calculated information
-    return bio_info
+    return tuple(bio_info)
 
 
 def create_report(info: list):
