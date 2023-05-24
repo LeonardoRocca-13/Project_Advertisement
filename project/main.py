@@ -2,6 +2,7 @@ import random
 
 import libraries.vison_detection as vdl
 from libraries.windows import UserAgreementWindow
+import libraries.text_generation
 
 
 def greeting_window():
@@ -66,6 +67,7 @@ def get_place():
             country = "Singapore"
             
     return (place, country)
+
 
 def get_product():
     products = ["Coffee", "Sport Shoes", "Headphones", "Sunglasses", "Smartphone", "Laptop", "Car"]
