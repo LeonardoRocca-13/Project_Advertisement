@@ -4,7 +4,7 @@ from libraries.utils.api_openai import get_openai_model
 from libraries.text_generation import generate_prompt
 from libraries.vison_detection import capture_frame
 from libraries.utils.weather import get_weather
-from libraries.windows import UserAgreementWindow, FlightWindow
+from libraries.windows import UserAgreementWindow, FlightWindow, AdWindow
 
 
 def greeting_window():
@@ -27,8 +27,7 @@ def flight_window():
 
 
 def ad_window(ad_text: str):
-    # kuz stuffs!
-    print(ad_text)
+    AdWindow(ad_text).run()
 
 
 def get_flight_info():
@@ -54,6 +53,7 @@ def get_random_location():
 def get_random_product():
     products = {
         "Coffee": ["Starbucks", "Lavazza", "Nespresso"],
+        "Shopping": ["Target", "Zara", "Timberland"],
         "Sport Shoes": ["Nike", "Adidas", "Puma"],
         "Headphones": ["Sony", "Bose", "JBL"],
         "Sunglasses": ["Ray-Ban", "Oakley", "Persol"],

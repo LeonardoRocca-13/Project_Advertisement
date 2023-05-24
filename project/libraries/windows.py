@@ -139,3 +139,13 @@ class FlightWindow(BaseWindow):
                         button_width=520,
                         button_command=self.window.destroy,
                         button_pady=20)
+
+class AdWindow(BaseWindow):
+    def __init__(self, ad_text) -> None:
+        super().__init__()
+        
+        self.add_label(label_master=self.window,
+                          label_text=f'Sample ad:\n\n{ad_text}',
+                          font_size=30, font_weight="normal",
+                          label_padx=10, label_pady=(60, 10),
+                          is_label_wrap=True)
