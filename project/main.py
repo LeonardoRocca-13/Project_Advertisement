@@ -1,10 +1,10 @@
 import random
 
-from libraries.vison_detection import capture_frame
-from libraries.windows import UserAgreementWindow
-from libraries.text_generation import generate_prompt
-from libraries.utils.weather import get_weather
 from libraries.utils.api_openai import get_openai_model
+from libraries.text_generation import generate_prompt
+from libraries.vison_detection import capture_frame
+from libraries.utils.weather import get_weather
+from libraries.windows import UserAgreementWindow
 
 
 def greeting_window():
