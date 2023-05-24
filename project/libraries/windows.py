@@ -1,5 +1,4 @@
 import customtkinter as ctk
-
 import os
 
 # from utils.settings import USER_AGREEMENT_FILE_NAME, RESOURCES_FOLDER_NAME
@@ -20,26 +19,27 @@ class BaseWindow:
                   is_label_wrap=False) -> None:
         label_font = ctk.CTkFont(family="Helvetica", size=font_size, weight=font_weight)
         if not is_label_wrap:
-            new_label = ctk.CTkLabel(master=label_master,
+            label = ctk.CTkLabel(master=label_master,
                                     text=label_text,
                                     font=label_font)
         else:
-            new_label = ctk.CTkLabel(master=label_master,
+            label = ctk.CTkLabel(master=label_master,
                                     text=label_text,
                                     font=label_font,
                                     wraplength=500,
                                     justify="left")
-
-        new_label.pack(padx=label_padx, pady=label_pady)
+        label.pack(padx=label_padx, pady=label_pady)
+        return label
 
     def add_button(self, button_master, button_text,
                    button_width, button_command,
                    button_padx=0, button_pady=0) -> None:
-        new_button = ctk.CTkButton(master=button_master,
+        button = ctk.CTkButton(master=button_master,
                                    text=button_text,
                                    width=button_width,
                                    command=button_command)
-        new_button.pack(padx=button_padx, pady=button_pady)
+        button.pack(padx=button_padx, pady=button_pady)
+        return button
 
     def run(self) -> None:
         self.window.mainloop()
@@ -91,6 +91,51 @@ class UserAgreementWindow(BaseWindow):
     def window_destroy(self) -> None:
         self.window.destroy()
 
-if __name__ == "__main__":
-    user_agreement_window = UserAgreementWindow()
-    user_agreement_window.run()
+
+class FlightWindow(BaseWindow):
+    def __init__(self, flight_info, current_location, destination) -> None:
+        super().__init__()
+        self.flight_info = flight_info
+        self.current_location = current_location
+        self.destination = destination
+        
+        self.add_label(label_master=self.window,
+                       label_text="Scan your ticket",
+                       font_size=30, font_weight="bold",
+                       label_padx=10, label_pady=(40, 20))
+        
+        self.scan_button = self.add_button(button_master=self.window,
+                        button_text="Scan",
+                        button_width=520,
+                        button_command=self.successful_scan,
+                        button_pady=20)
+        
+    def successful_scan(self) -> None:
+        self.scan_button.destroy()
+
+        self.add_label(label_master=self.window,
+                       label_text="Ticket scanned successfully!",
+                       font_size=20, font_weight="bold",
+                       label_padx=10, label_pady=20)
+        
+        display_text = f"Your flight information:\n\n" \
+                       f"Flight duration: {self.flight_info[0]}\n" \
+                       f"Boarding time: {self.flight_info[1]}\n" \
+                       f"Destination: {self.destination[0]}, {self.destination[1]}\n" \
+                       f"Airline: {self.flight_info[2]}\n" \
+
+        self.add_label(label_master=self.window,
+                       label_text=display_text,
+                       font_size=20, font_weight="normal",
+                       label_padx=10, label_pady=(10, 12))
+        
+        self.add_label(label_master=self.window,
+                       label_text=f"Current city: {self.current_location[0]}, {self.current_location[1]}",
+                       font_size=20, font_weight="normal",
+                       label_padx=10, label_pady=(20, 10))
+        
+        self.add_button(button_master=self.window,
+                        button_text="Keep going",
+                        button_width=520,
+                        button_command=self.window.destroy,
+                        button_pady=20)
