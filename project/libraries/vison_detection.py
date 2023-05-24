@@ -4,8 +4,8 @@ import time
 import cv2
 import numpy as np
 from deepface import DeepFace
-from get_path import get_path
-from settings import HAARCASCADE_FILE_NAME, RESOURCES_FOLDER_NAME
+from libraries.utils.get_path import get_path
+from libraries.utils.settings import HAARCASCADE_FILE_NAME, RESOURCES_FOLDER_NAME
 
 
 def capture_frame():
@@ -115,7 +115,3 @@ def create_report(info: list):
             # Iterate over the key-value pairs in the frame dictionary
             for key, value in frame[0].items():
                 report.write(f'{key}: {value}\n\n')
-
-
-if __name__ == "__main__":
-    capture_frame()

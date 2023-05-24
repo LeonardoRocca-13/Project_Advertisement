@@ -2,12 +2,10 @@ import customtkinter as ctk
 import tkinter as tk
 from PIL import Image, ImageTk
 
-import cv2
-import os
+import libraries.vison_detection as vdl
 
-# import libraries.vison_detection as vdl
 from libraries.windows import UserAgreementWindow
-# from libraries.utils.get_path import get_path
+import libraries.text_generation 
 
 
 def greeting_window():
@@ -15,17 +13,33 @@ def greeting_window():
     greeting_window.run()
 
 
-def get_ad():
+def webcam_window():
+    infos = vdl.capture_frame()
+    return infos
+
+
+def ad_window(infos: tuple):
     ad_window = ctk.CTk()
     ad_window.title("Advertisement")
     ad_window.geometry("800x600")
     ad_window.mainloop()
+    # ottenimento biglietto simulato
+    # funzione get_ad
+    # get_ad(infos)
+
+
+def get_ad(infos: tuple):
+    ...
+
+
+def get_product():
+    ...
 
 
 def main():
     greeting_window()
-    # webcam_window()
-    # get_ad()
+    infos = webcam_window()
+    ad_window(infos)
 
 
 if __name__ == "__main__":

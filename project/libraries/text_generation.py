@@ -7,8 +7,8 @@ from langchain import LLMChain
 import requests
 import os
 
-from get_path import get_path
-from settings import OPENAI_API_KEY_FILE_NAME, RESOURCES_FOLDER_NAME, WEATHER_INDEX_FILE_NAME
+from libraries.utils.get_path import get_path
+from libraries.utils.settings import OPENAI_API_KEY_FILE_NAME, RESOURCES_FOLDER_NAME, WEATHER_INDEX_FILE_NAME
 
 
 def setup_api_openai():

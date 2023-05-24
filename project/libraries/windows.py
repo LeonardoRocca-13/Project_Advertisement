@@ -3,8 +3,8 @@ import tkinter as tk
 
 import os
 
-from settings import USER_AGREEMENT_FILE_NAME, RESOURCES_FOLDER_NAME
-from get_path import get_path
+from libraries.utils.settings import USER_AGREEMENT_FILE_NAME, RESOURCES_FOLDER_NAME
+from libraries.utils.get_path import get_path
 
 
 class BaseWindow:
@@ -64,7 +64,3 @@ class UserAgreementWindow(BaseWindow):
 
     def window_destroy(self) -> None:
         self.window.destroy()
-
-if __name__ == "__main__":
-    greeting_window = UserAgreementWindow()
-    greeting_window.run()
