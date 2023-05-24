@@ -5,7 +5,7 @@ from PIL import Image, ImageTk
 import libraries.vison_detection as vdl
 
 from libraries.windows import UserAgreementWindow
-import libraries.text_generation 
+import libraries.text_generation
 
 
 def greeting_window():
@@ -14,18 +14,23 @@ def greeting_window():
 
 
 def webcam_window():
-    infos = vdl.capture_frame()
-    return infos
+    bio_info = vdl.capture_frame()
+    return bio_info
+
+
+def flight_window():
+    flight_window = ctk.CTk()
+    flight_window.title("Flight")
+    flight_window.geometry("800x600")
+    flight_window.mainloop()
+    # ottenimento biglietto simulato
+    # funzione get_flight
+    # get_flight(infos)
 
 
 def ad_window(infos: tuple):
-    ad_window = ctk.CTk()
-    ad_window.title("Advertisement")
-    ad_window.geometry("800x600")
-    ad_window.mainloop()
-    # ottenimento biglietto simulato
-    # funzione get_ad
-    # get_ad(infos)
+    ...
+    # Return the ad
 
 
 def get_ad(infos: tuple):

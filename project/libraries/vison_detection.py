@@ -1,6 +1,5 @@
 import os
 import time
-
 import cv2
 import numpy as np
 from deepface import DeepFace
@@ -14,7 +13,7 @@ def capture_frame():
     capture = cv2.VideoCapture(0)
 
     # Set the maximum duration to capture frames (in seconds)
-    set_max_seconds = 10
+    set_max_seconds = 15
     start = time.time()
 
     while capture.isOpened():
@@ -42,12 +41,10 @@ def capture_frame():
     capture.release()
     cv2.destroyAllWindows()
 
-    create_report(info)
-    result = extract_info(info)
+    # create_report(info)
+    bio_info = extract_info(info)
 
-    print(result)
-
-    return result
+    return bio_info
 
 
 def detect_face(frame: cv2):
@@ -79,6 +76,7 @@ def analyze_face(frame: cv2, info: list):
 
 def extract_info(info: list):
     # Create a dictionary to store the extracted information
+    bio_info = []
     result = {
         'age': [],
         'gender': [],
@@ -91,17 +89,13 @@ def extract_info(info: list):
         result['gender'].append(frame[0]['dominant_gender'])
         result['emotion'].append(frame[0]['dominant_emotion'])
 
-    # Print the extracted information
-    print(result)
-
     # Calculate the mean age, most frequent gender, and most frequent emotion
-    result['age'] = int(np.median(result['age']))
-    ##TODO: Check if can use meadian instead of mean
-    result['gender'] = max(set(result['gender']), key=result['gender'].count)
-    result['emotion'] = max(set(result['emotion']), key=result['emotion'].count)
+    bio_info.append(int(np.median(result['age'])))
+    bio_info.append(max(set(result['gender']), key=result['gender'].count))
+    bio_info.append(max(set(result['emotion']), key=result['emotion'].count))
 
     # Return the extracted and calculated information
-    return result
+    return bio_info
 
 
 def create_report(info: list):
