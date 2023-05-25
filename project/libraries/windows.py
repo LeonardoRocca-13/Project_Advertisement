@@ -10,8 +10,7 @@ class BaseWindow:
         self.window.title("TAP")
         self.window.geometry("800x600")
 
-    @staticmethod
-    def add_label(label_master, label_text, font, label_padx=0, label_pady=0, is_label_wrap=False):
+    def add_label(self, label_master, label_text, font, label_padx=0, label_pady=0, is_label_wrap=False):
         label_font = ctk.CTkFont(*font)
         if not is_label_wrap:
             label = ctk.CTkLabel(master=label_master, text=label_text, font=label_font)
@@ -20,8 +19,7 @@ class BaseWindow:
         label.pack(padx=label_padx, pady=label_pady)
         return label
 
-    @staticmethod
-    def add_button(button_master, button_text, button_width, button_command, button_padx=0, button_pady=0):
+    def add_button(self, button_master, button_text, button_width, button_command, button_padx=0, button_pady=0):
         button = ctk.CTkButton(master=button_master, text=button_text, width=button_width, command=button_command)
         button.pack(padx=button_padx, pady=button_pady)
         return button
@@ -157,4 +155,12 @@ class AdWindow(BaseWindow):
             label_padx=10,
             label_pady=(60, 10),
             is_label_wrap=True
+        )
+        
+        self.add_button(
+            button_master=self.window,
+            button_text="Close",
+            button_width=520,
+            button_command=self.window.quit,
+            button_pady=20
         )

@@ -27,6 +27,7 @@ def generate_prompt(weather: dict, llm, bio_info: tuple, flight_info: tuple, pro
     Use this json file to decode the weather context but don't show anything in the ad: {json_context}.
     The output should exclude any personal information about the person and should adress the target personally,
     (speaking to him like a friend), and the him why he should be interested to the ad.
+    NEVER USE WORD "neutral" in the ad.
     """
 
     # Create a prompt template with defined variables
