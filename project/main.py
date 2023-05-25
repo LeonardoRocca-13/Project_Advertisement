@@ -20,8 +20,7 @@ def flight_window():
     current_location, destination = get_random_location()
     weather = get_weather(current_location)
     flight_info = get_flight_info()
-    flight_window = FlightWindow(flight_info, current_location, destination)
-    flight_window.run()
+    FlightWindow(flight_info, current_location, destination).run()
 
     return flight_info, weather
 
@@ -39,7 +38,7 @@ def get_flight_info():
     time_before_departure = random.choice(sample_time_before_departures)
     airline_company = random.choice(sample_airline_companies)
 
-    return (flight_duration, time_before_departure, airline_company)
+    return flight_duration, time_before_departure, airline_company
 
 
 def get_random_location():
@@ -47,7 +46,7 @@ def get_random_location():
     countries = ["Italy", "France", "United Kingdom", "Morocco", "United States", "Japan", "Australia", "Peru", "Singapore"]
 
     locations = tuple(zip(cities, countries))
-    return (random.choice(locations), random.choice(locations))
+    return random.choice(locations), random.choice(locations)
 
 
 def get_random_product():
