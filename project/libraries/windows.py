@@ -1,7 +1,8 @@
 import customtkinter as ctk
+import os
+
 from libraries.utils.settings import USER_AGREEMENT_FILE_NAME, RESOURCES_FOLDER_NAME
 from libraries.utils.get_path import get_path
-import os
 
 
 class BaseWindow:
@@ -10,7 +11,8 @@ class BaseWindow:
         self.window.title("TAP")
         self.window.geometry("800x600")
 
-    def add_label(self, label_master, label_text, font, label_padx=0, label_pady=0, is_label_wrap=False):
+    @staticmethod
+    def add_label(label_master, label_text, font, label_padx=0, label_pady=0, is_label_wrap=False):
         label_font = ctk.CTkFont(*font)
         if not is_label_wrap:
             label = ctk.CTkLabel(master=label_master, text=label_text, font=label_font)
@@ -19,13 +21,18 @@ class BaseWindow:
         label.pack(padx=label_padx, pady=label_pady)
         return label
 
-    def add_button(self, button_master, button_text, button_width, button_command, button_padx=0, button_pady=0):
+    @staticmethod
+    def add_button(button_master, button_text, button_width, button_command, button_padx=0, button_pady=0):
         button = ctk.CTkButton(master=button_master, text=button_text, width=button_width, command=button_command)
         button.pack(padx=button_padx, pady=button_pady)
         return button
 
     def run(self):
         self.window.mainloop()
+
+    def window_destroy(self):
+        self.window.destroy()
+        self.window.quit()
 
 
 class UserAgreementWindow(BaseWindow):
@@ -70,13 +77,11 @@ class UserAgreementWindow(BaseWindow):
     def get_user_agreement():
         current_path = get_path()
         user_agreement_path = os.path.join(current_path, RESOURCES_FOLDER_NAME, USER_AGREEMENT_FILE_NAME)
+
         with open(user_agreement_path, "r") as file:
             user_agreement_text = file.read()
 
         return user_agreement_text
-
-    def window_destroy(self):
-        self.window.destroy()
 
 
 class FlightWindow(BaseWindow):
@@ -139,7 +144,7 @@ class FlightWindow(BaseWindow):
             button_master=self.window,
             button_text="Keep going",
             button_width=520,
-            button_command=self.window.destroy,
+            button_command=self.window_destroy,
             button_pady=20
         )
 
@@ -156,11 +161,11 @@ class AdWindow(BaseWindow):
             label_pady=(60, 10),
             is_label_wrap=True
         )
-        
+
         self.add_button(
             button_master=self.window,
             button_text="Close",
             button_width=520,
-            button_command=self.window.quit,
+            button_command=self.window_destroy,
             button_pady=20
         )

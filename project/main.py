@@ -78,11 +78,9 @@ def main():
     greeting_window()
     bio_info = webcam_window()
     flight_info, weather = flight_window()
-    product = get_random_product()  #TODO: if time make it so not random but based on the user's traits
+    product = get_random_product()
     ad_text = get_ad(bio_info, weather, flight_info, product)
     ad_window(ad_text)
-    #TODO: add ad webcam_scan_window, ad_window and use async to query the model while waiting for the user to open the ad window
-    #TODO: keep only the windows, all the operations should be done in a separate file
 
 
 if __name__ == "__main__":

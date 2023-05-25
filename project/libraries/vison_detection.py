@@ -1,8 +1,9 @@
-import os
+from deepface import DeepFace
+import numpy as np
 import time
 import cv2
-import numpy as np
-from deepface import DeepFace
+import os
+
 from libraries.utils.get_path import get_path
 from libraries.utils.settings import HAARCASCADE_FILE_NAME, RESOURCES_FOLDER_NAME
 
