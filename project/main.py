@@ -76,8 +76,7 @@ def get_ad(bio_info: tuple, weather: str, flight_info: tuple, product: str):
 
 def main():
     greeting_window()
-    # bio_info = webcam_window()
-    bio_info = ["Male", "25", "neutral"]
+    bio_info = webcam_window()
     flight_info, weather = flight_window()
     product = get_random_product()  #TODO: if time make it so not random but based on the user's traits
     ad_text = get_ad(bio_info, weather, flight_info, product)
