@@ -13,8 +13,8 @@ We believe that targeted advertising can greatly enhance the effectiveness of pr
 
 Our project is developed and maintained by:
 
-- Leonardo Rocca
-- Alessandro Kuz
+- (Leonardo Rocca)[https://github.com/LeonardoRocca-13]
+- (Alessandro Kuz)[https://github.com/AlessandroKuz]
 
 ## Table of Contents
 
@@ -51,7 +51,7 @@ Now you have successfully installed all the required dependencies. You are ready
 
 ## Usage
 
-TO IMPLEMENT
+Once the environment is setup, all you need to do is execute ```main.py```!
 
 ## Contributing
 
