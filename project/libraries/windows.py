@@ -11,19 +11,28 @@ class BaseWindow:
         self.window.title("TAP")
         self.window.geometry("800x600")
 
-    @staticmethod
-    def add_label(label_master, label_text, font, label_padx=0, label_pady=0, is_label_wrap=False):
+    def add_label(label_master, label_text,
+                  label_padx=0, label_pady=0,
+                  is_label_wrap=False):
         label_font = ctk.CTkFont(*font)
         if not is_label_wrap:
-            label = ctk.CTkLabel(master=label_master, text=label_text, font=label_font)
+            label = ctk.CTkLabel(master=label_master,
+                                 text=label_text,
+                                 font=label_font)
         else:
-            label = ctk.CTkLabel(master=label_master, text=label_text, font=label_font, wraplength=500, justify="left")
+            label = ctk.CTkLabel(master=label_master,
+                                 text=label_text, font=label_font,
+                                 wraplength=500, justify="left")
         label.pack(padx=label_padx, pady=label_pady)
         return label
 
-    @staticmethod
-    def add_button(button_master, button_text, button_width, button_command, button_padx=0, button_pady=0):
-        button = ctk.CTkButton(master=button_master, text=button_text, width=button_width, command=button_command)
+    def add_button(button_master, button_text,
+                   button_width, button_command,
+                   button_padx=0, button_pady=0):
+        button = ctk.CTkButton(master=button_master,
+                               text=button_text,
+                               width=button_width,
+                               command=button_command)
         button.pack(padx=button_padx, pady=button_pady)
         return button
 
@@ -76,7 +85,9 @@ class UserAgreementWindow(BaseWindow):
     @staticmethod
     def get_user_agreement():
         current_path = get_path()
-        user_agreement_path = os.path.join(current_path, RESOURCES_FOLDER_NAME, USER_AGREEMENT_FILE_NAME)
+        user_agreement_path = os.path.join(current_path,
+                                           RESOURCES_FOLDER_NAME,
+                                           USER_AGREEMENT_FILE_NAME)
 
         with open(user_agreement_path, "r") as file:
             user_agreement_text = file.read()
