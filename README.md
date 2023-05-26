@@ -13,8 +13,8 @@ We believe that targeted advertising can greatly enhance the effectiveness of pr
 
 Our project is developed and maintained by:
 
-- (Leonardo Rocca)[https://github.com/LeonardoRocca-13]
-- (Alessandro Kuz)[https://github.com/AlessandroKuz]
+- [Leonardo Rocca](https://github.com/LeonardoRocca-13)
+- [Alessandro Kuz](https://github.com/AlessandroKuz)
 
 ## Table of Contents
 
