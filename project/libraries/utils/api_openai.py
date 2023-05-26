@@ -13,7 +13,7 @@ def get_openai_model():
         with open(file_path, 'r') as key_file:
             api_key = key_file.readline()
     except FileNotFoundError:
-        print("Please enter your OpenAI API key in the file 'openai_api_key.txt' in the root folder of the project.")
+        print("Please enter your OpenAI API key in the file 'openai_api_key.txt' in the project/resources folder.")
         exit(1)
 
     os.environ["OPENAI_API_KEY"] = api_key
