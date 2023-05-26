@@ -31,18 +31,24 @@ To set up the project and install the required dependencies, please follow these
 ```git clone https://github.com/LeonardoRocca-13/Project_Advertisement.git```
 
 2. Navigate to the project directory:
-```cd YOUR-REPO-PATH```
+```cd (YOUR-REPO-PATH)```
+
+3. Create a virtual environment (optional but recommended):
+```conda create -n (TAP)```
+
+4. Activate the virtual environment:
+```conda activate TAP```
+
+(OR using venv:
 
 3. Create a virtual environment (optional but recommended):
 ```python -m venv env```
 
 4. Activate the virtual environment:
-
 -For Windows:
 ```.\env\Scripts\activate```
-
 -For macOS/Linux:
-```source env/bin/activate```
+```source env/bin/activate```)
 
 5. Install the required dependencies from the requirements.txt file:
 ```pip install -r requirements.txt```
