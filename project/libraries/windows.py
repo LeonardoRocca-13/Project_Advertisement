@@ -11,7 +11,8 @@ class BaseWindow:
         self.window.title("TAP")
         self.window.geometry("800x600")
 
-    def add_label(label_master, label_text,
+    def add_label(self, *,
+                  font, label_master, label_text,
                   label_padx=0, label_pady=0,
                   is_label_wrap=False):
         label_font = ctk.CTkFont(*font)
@@ -26,7 +27,8 @@ class BaseWindow:
         label.pack(padx=label_padx, pady=label_pady)
         return label
 
-    def add_button(button_master, button_text,
+    def add_button(self, *,
+                   button_master, button_text,
                    button_width, button_command,
                    button_padx=0, button_pady=0):
         button = ctk.CTkButton(master=button_master,
